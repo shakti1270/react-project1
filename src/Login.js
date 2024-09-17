@@ -18,39 +18,46 @@ const Login = () => {
   const navigate = useNavigate();
 
   return (
-    <Formik
-      initialValues={{ email: '', password: '' }}
-      validationSchema={schema}
-      onSubmit={(values, { setSubmitting }) => {
-        setTimeout(() => {
-          if (values.email === 'shakti@gmail.com' && values.password === 'Shakti@123') {
-            console.log('Valid login credentials');
-            navigate('/home', { replace: true }); 
-            console.log('Navigating to Home page');
-          } else {
-            console.log('Invalid login credentials');
+    <div className="form-container">
+      <h1>Login</h1>
+      <Formik
+        initialValues={{ email: '', password: '' }}
+        validationSchema={schema}
+        onSubmit={(values, { setSubmitting }) => {
+          setTimeout(() => {
+            if (values.email === 'shakti@gmail.com' && values.password === 'Shakti@123') {
+              console.log('Valid login credentials');
+              navigate('/home', { replace: true }); 
+              console.log('Navigating to Home page');
+            } else {
+              console.log('Invalid login credentials');
+              
+            }
+            setSubmitting(false);
+          }, 400);
+        }}
+      >
+        {({ isSubmitting }) => (
+          <Form>
+            <label htmlFor="email">Email:</label>
+            <Field type="email" name="email" placeholder="Enter your email" />
+            <ErrorMessage name="email" component="div" className="error-message" />
             
-          }
-          setSubmitting(false);
-        }, 400);
-      }}
-    >
-      {({ isSubmitting }) => (
-        <Form>
-          <label>Email:</label>
-          <Field type="email" name="email" placeholder="Enter your email" />
-          <ErrorMessage name="email" component="div" className="error-message" />
-          <br />
-          <label>Password:</label>
-          <Field type="password" name="password" placeholder="Enter your password" />
-          <ErrorMessage name="password" component="div" className="error-message" />
-          <br />
-          <button type="submit" disabled={isSubmitting}>
-            Login
-          </button>
-        </Form>
-      )}
-    </Formik>
+            <label htmlFor="password">Password:</label>
+            <Field type="password" name="password" placeholder="Enter your password" />
+            <ErrorMessage name="password" component="div" className="error-message" />
+            
+            <button type="submit" disabled={isSubmitting}>
+              Login
+            </button>
+            
+            <div className="link">
+              <p>Don't have an account? <Link to="/register">Register</Link></p>
+            </div>
+          </Form>
+        )}
+      </Formik>
+    </div>
   );
 };
 
